@@ -1,8 +1,20 @@
-import React from 'react'
+import { useState } from 'react';
+import Header from './components/Header'
+import Footer from './components/Footer'
+import './App.css'
 
-const App = () => {
+
+function App() {
+
+  const [theme, setTheme] = useState('light')
+
   return (
-    <div>App</div>
+    <>
+    <div className='w-full min-h-screen  relative'>
+      <Header theme = {theme} />
+      <Footer theme = {theme}/>
+    </div>
+    </>
   )
 }
 
