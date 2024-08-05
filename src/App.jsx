@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Header from './components/Header'
 import Footer from './components/Footer'
+import AddNote from './components/addNote/AddNote';
 import './App.css'
 
 
@@ -10,9 +11,10 @@ function App() {
 
   return (
     <>
-    <div className='w-full min-h-screen  relative'>
+    <div className='w-full min-h-screen relative'>
       <Header theme = {theme} />
-      <Footer theme = {theme}/>
+      <AddNote />
+      {/* <Footer theme = {theme}/> */}
     </div>
     </>
   )
