@@ -3,14 +3,11 @@ import YouTube from "react-youtube";
 import NoteForm from "./NoteForm";
 
 const MediaPlayer = (props) => {
-  
   // destructuring Props
-  const { mediaLink } = props;
-
+  const { mediaLink, notes, setNotes } = props;
 
   // set video Info
   const [player, setPlayer] = useState({});
-
 
   // to set Video Title
   const [videoTitle, setVideoTitle] = useState("");
@@ -104,7 +101,12 @@ const MediaPlayer = (props) => {
             onError={onError}
             onReady={onReady}
           />
-          <NoteForm watchedDuration={watchedDuration} videoInfo = {()=>player.getVideoData()} />
+          <NoteForm
+            watchedDuration={watchedDuration}
+            videoInfo={() => player.getVideoData()}
+            notes={notes}
+            setNotes={setNotes}
+          />
         </div>
         <h1 className="text-white text-3xl">{videoTitle}</h1>
       </div>

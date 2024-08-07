@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import {toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MediaPlayer from "./MediaPlayer";
 import NotesList from "./NotesList";
@@ -11,6 +11,29 @@ const AddNote = () => {
   // to setUrl of required video
   const [mediaLink, setMediaLink] = useState("");
 
+  // to fetch note if they exist for corresponding video
+  const [notes, setNotes] = useState([]);
+
+  // when medialink set
+  useEffect(() => {
+    setNotes(() => {
+      const storedNotes = localStorage.getItem(mediaLink);
+      return storedNotes ? JSON.parse(storedNotes) : [];
+    });
+  }, [mediaLink]);
+
+  // saving data to LocalStorage
+  const saveToLS = () => {
+    localStorage.setItem(mediaLink, JSON.stringify(notes));
+  };
+
+  //   will be called when notes array gets updated
+  useEffect(() => {
+    saveToLS();
+    console.log(notes);
+  }, [notes]);
+
+  // handling input from user
   const inputHandler = (e) => {
     let val = e.target.value;
     setSearch(val);
@@ -35,7 +58,6 @@ const AddNote = () => {
           } else {
             setMediaLink(searchUrl.pathname.substring(1));
           }
-          
         }
       } catch (error) {
         toast.error("Please enter a valid Youtube URL");
@@ -47,36 +69,37 @@ const AddNote = () => {
 
   return (
     <>
-    <div className="w-full bg-gray-950">
-      <div className="search-bar w-full flex justify-center py-10">
-        {/* search bar to paste video link */}
-        <input
-          type="text"
-          value={search}
-          onChange={inputHandler}
-          placeholder="Enter Youtube Video URL"
-          className="h-16 w-1/3 px-4 text-xl border-2 border-gray-600/50 outline-none bg-gray-500 text-white placeholder:text-white"
-        />
-        <button
-          type="button"
-          onClick={clickHandler}
-          className="bg-sky-600 text-xl h-16 px-10"
-        >
-          Search
-        </button>
-      </div>
+      <div className="w-full bg-gray-950">
+        <div className="search-bar w-full flex justify-center py-10">
+          {/* search bar to paste video link */}
+          <input
+            type="text"
+            value={search}
+            onChange={inputHandler}
+            placeholder="Enter Youtube Video URL"
+            className="h-16 w-1/3 px-4 text-xl border-2 border-gray-600/50 outline-none bg-gray-500 text-white placeholder:text-white"
+          />
+          <button
+            type="button"
+            onClick={clickHandler}
+            className="bg-sky-600 text-xl h-16 px-10"
+          >
+            Search
+          </button>
+        </div>
 
-      
-      {/* Media Player  */}
-      {mediaLink && <MediaPlayer mediaLink={mediaLink}/>}
+        {/* Media Player  */}
+        {mediaLink && (
+          <MediaPlayer
+            mediaLink={mediaLink}
+            notes={notes}
+            setNotes={setNotes}
+          />
+        )}
       </div>
 
       {/* NotesList container */}
-      {mediaLink && <NotesList />}
-
-      {/* React toastify container */}
-      <ToastContainer />
-      
+      {mediaLink && <NotesList notes={notes} setNotes={setNotes} />}
     </>
   );
 };

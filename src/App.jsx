@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import Header from './components/Header'
 import Footer from './components/Footer'
-import AddNote from './components/addNote/AddNote';
+import { Outlet } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import './App.css'
 
 
@@ -12,8 +13,9 @@ function App() {
   return (
     <>
     <div className='w-full min-h-screen relative bg-gray-950'>
+      <ToastContainer />
       <Header theme = {theme} />
-      <AddNote />
+      <Outlet />
       {/* <Footer theme = {theme}/> */}
     </div>
     </>

@@ -1,6 +1,7 @@
 import React from "react";
 import { MdDarkMode } from "react-icons/md";
 import { CiLight } from "react-icons/ci";
+import { NavLink } from "react-router-dom";
 
 const Header = (prop) => {
 
@@ -11,9 +12,9 @@ const Header = (prop) => {
         <div className="leftSide flex gap-10 items-center">
           <h2 className="logo text-3xl text-purple-800 font-mono font-bold">NoteMate</h2>
           <ul className="nav-links flex gap-3 text-xl text-white font-bold font-mono">
-            <li>Home</li>
-            <li>AboutUs</li>
-            <li>AddNote</li>
+            <NavLink to="/"><li>Home</li></NavLink>
+            <NavLink to="/aboutus"><li>AboutUs</li></NavLink>
+            <NavLink to="/addnotes"><li>AddNote</li></NavLink>
           </ul>
         </div>
         <div className="rightSide mx-10 flex gap-5 items-center">

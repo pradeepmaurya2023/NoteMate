@@ -1,19 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { MdOutlineAdd } from "react-icons/md";
-import { ToastContainer, toast } from "react-toastify";
+import {toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const NoteForm = (prop) => {
   // destructuring props
-  const { watchedDuration, videoInfo } = prop;
-
-  // Fetching all notes stored in Local Storage
-  const [notes, setNotes] = useState(() => {
-    // Initialize notes state with data from localStorage or with an empty array if there is no data
-    const storedNotes = localStorage.getItem("videoNote");
-    return storedNotes ? JSON.parse(storedNotes) : [];
-  });
+  const { watchedDuration, videoInfo, notes, setNotes } = prop;
 
   // saving data to LocalStorage
   const saveToLS = () => {
@@ -31,6 +24,7 @@ const NoteForm = (prop) => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -41,18 +35,15 @@ const NoteForm = (prop) => {
     const { title: noteTitle, note: noteData } = data;
 
     const newNote = {
-      videoTitle: videoTitle,
-      url: url,
-      note: {
         noteData: noteData,
         noteTitle: noteTitle,
         timeStamp: timeStamp,
-      },
     };
     // updating notes state
     setNotes([...notes, newNote]);
     // Show a success notification
     toast.success("Note submitted successfully!");
+    reset()
   };
   return (
     <>
@@ -110,8 +101,6 @@ const NoteForm = (prop) => {
             Add Note
           </button>
         </form>
-        {/* to show notification when note is added to Local Storage */}
-        <ToastContainer />
       </div>
     </>
   );
