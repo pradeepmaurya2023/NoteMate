@@ -35,10 +35,7 @@ const AddNote = () => {
           } else {
             setMediaLink(searchUrl.pathname.substring(1));
           }
-          window.scrollTo({
-            top: 200,
-            behavior: "smooth",
-          });
+          
         }
       } catch (error) {
         toast.error("Please enter a valid Youtube URL");
@@ -69,15 +66,17 @@ const AddNote = () => {
         </button>
       </div>
 
+      
       {/* Media Player  */}
-      <MediaPlayer mediaLink={mediaLink} />
+      {mediaLink && <MediaPlayer mediaLink={mediaLink}/>}
+      </div>
 
       {/* NotesList container */}
-      <NotesList />
+      {mediaLink && <NotesList />}
 
       {/* React toastify container */}
       <ToastContainer />
-      </div>
+      
     </>
   );
 };

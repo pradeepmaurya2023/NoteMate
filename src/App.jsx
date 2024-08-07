@@ -11,7 +11,7 @@ function App() {
 
   return (
     <>
-    <div className='w-full min-h-screen relative'>
+    <div className='w-full min-h-screen relative bg-gray-950'>
       <Header theme = {theme} />
       <AddNote />
       {/* <Footer theme = {theme}/> */}

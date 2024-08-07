@@ -1,18 +1,37 @@
 import React, { useState } from "react";
 import YouTube from "react-youtube";
+import NoteForm from "./NoteForm";
 
 const MediaPlayer = (props) => {
+  
+  // destructuring Props
   const { mediaLink } = props;
+
+
+  // set video Info
+  const [player, setPlayer] = useState({});
+
 
   // to set Video Title
   const [videoTitle, setVideoTitle] = useState("");
 
   //
   const onReady = (event) => {
-    const player = event.target;
-    const videoData = player.getVideoData();
+    // scrolling window once video is loaded
+    window.scrollTo({
+      top: 250,
+      behavior: "smooth",
+    });
+
+    // setting video info
+    const videoPlayer = event.target;
+    // console.log(videoPlayer)
+    setPlayer(videoPlayer);
+    const videoData = videoPlayer.getVideoData();
+    // console.log(videoData)
     setVideoTitle(videoData.title);
   };
+
   // Customizations for Youtube media player
   const opts = {
     height: "100%",
@@ -46,20 +65,38 @@ const MediaPlayer = (props) => {
     }
   };
 
+  // convert seconds into readable format
+  function convertSeconds(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    if (hours > 0) {
+      return `${hours}:${minutes}:${remainingSeconds}`;
+    } else {
+      return `${minutes}:${remainingSeconds}`;
+    }
+  }
+
+  // get watchedDureation
+  const watchedDuration = () => {
+    // console.log(player.getVideoData())
+    if (player) {
+      return convertSeconds(player.getCurrentTime());
+    }
+  };
+
   // pause handler
   const handlerPause = (e) => {
-    const player = e.target;
-    const watchedDuration = player.getCurrentTime();
-    console.log(watchedDuration);
+    // console.log(watchedDuration())
   };
 
   return (
     <>
       {/* Media Player  */}
-      <div className="media-container w-full px-14 py-10 flex flex-col gap-5">
-        {mediaLink && (
+      <div className="media-container w-full px-10 py-10 flex flex-col gap-5">
+        <div className="media-content w-full flex gap-5">
           <YouTube
-            className="rounded-md border-4 border-gray-400 w-8/12 h-132"
+            className="rounded-md border-4 border-gray-400 w-8/12 h-128"
             videoId={mediaLink}
             onPause={handlerPause}
             onPlay={() => console.log("Playing")}
@@ -67,10 +104,10 @@ const MediaPlayer = (props) => {
             onError={onError}
             onReady={onReady}
           />
-        )}
-        {mediaLink && <h1 className="text-white text-3xl">{videoTitle}</h1>}
+          <NoteForm watchedDuration={watchedDuration} videoInfo = {()=>player.getVideoData()} />
+        </div>
+        <h1 className="text-white text-3xl">{videoTitle}</h1>
       </div>
-      
     </>
   );
 };
