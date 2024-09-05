@@ -64,7 +64,7 @@ const SearchBar = (prop) => {
         value={search}
         onChange={handleInput}
         placeholder="Enter Youtube Video URL"
-        className="h-12 md:h-16 w-full md:w-1/3 px-4 text-base md:text-xl border-2 border-gray-600/50 rounded-t-2xl md:rounded-l-2xl md:rounded-t-none outline-none bg-gray-500 text-white placeholder:text-white"
+        className="h-12 md:h-16 w-full md:w-1/3 px-4 text-base md:text-xl border-2 border-gray-600/50 rounded-t-2xl md:rounded-t-none md:rounded-l-2xl md:rounded-tl-2xl outline-none bg-gray-500 text-white placeholder:text-white"
       />
       <button
         type="button"
